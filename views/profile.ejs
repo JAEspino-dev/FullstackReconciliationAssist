@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Jobsite Expense Reimbursement Tracker</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="profileStyle.css">
+</head>
+
+<body>
+
+    <header>
+        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </header>
+<div id="toFlex">
+    <main>
+        <section id="title">
+            <h1>Jobsite Expense Reimbursement Tracker</h1>
+            <p>Submit, review, approve, and track employee reimbursement requests from submission through payment.</p>
+        </section>
+
+        <section>
+            <h2>Record an Expense</h2>
+            <p>Employees: Enter the date, description, and amount of a work-related expense that requires reimbursement.</p>
+            <p>Managers: Review submitted requests and update their status as they move through the approval process.</p>
+            <% { %>
+                <form action="/recordExpense" method="POST">
+                    <!-- <select name="approveStatus">
+                        <option value="Approved">Approved by Manager</option>
+                        <option value="Not Approved">Not Approved</option>
+                    </select> -->
+                    <input type="date" name="date">
+                    <!-- <input type="text" placeholder="Employee Name" name="employeeName"> -->
+                    <input type="text" value="<%= user.local.email %>" placeholder="Description"
+                        name="expenseDescription">
+                    <input type="number" step="0.01" placeholder="$ 0.00" name="amountSpent">
+                    <button type="submit">Submit</button>
+                </form>
+                <% } %>
+        </section>
+
+        <div class="lists">
+
+            <section id="unapprovedExpenses">
+                <h2>Pending Manager Review</h2>
+                <p>Submitted expenses waiting for approval.</p>
+                <ul class="">
+                    <!-- Loop through quotes objects from MongoDB -->
+                    <% for(let i=0; i < unapprovedList.length; i++) {%>
+                        <li class="items">
+                            <p>
+                                User that entered transaction: <%= unapprovedList[i].user %>
+                            </p>
+                            <span>
+                                <%= unapprovedList[i].date %>
+                            </span>
+                            <span>
+                                $ <%= unapprovedList[i].amountSpent %>
+                            </span>
+                            <%= unapprovedList[i].expenseDescription %>
+                                </span>
+                        </li>
+                        <button class="deleteButton"
+                            data-msg-id="<%= unapprovedList[i]._id %>">Deny</button>
+                        <button class="updateApproval"
+                            data-msg-id="<%= unapprovedList[i]._id %>">Approve</button>
+                        <% } %>
+                </ul>
+            </section>
+
+            <section id="approvedExpenses">
+                <h2>Approved for Reimbursement</h2>
+                <p>These expenses have been approved and are waiting for a reimbursement check.</p>
+                <ul>
+                    <% for(let i=0; i < approvedList.length; i++) {%>
+                        <li>
+                            <p>
+                                User that entered transaction: <%= approvedList[i].user %>
+                            </p>
+                            <span data-msg-id="<%= approvedList[i]._id %>">
+                                <%= approvedList[i].date %>
+                            </span>
+                            <span data-msg-id="<%= approvedList[i]._id %>">$ <%=
+                                    approvedList[i].amountSpent %></span>
+                            <span data-msg-id="<%= approvedList[i]._id %>">
+                                <%= approvedList[i].expenseDescription %>
+                            </span>
+                            <span data-msg-id="<%= approvedList[i]._id %>">
+                                <%= approvedList[i].approvedBy %>
+                            </span>
+                        </li>
+                        <button class="deleteButton"
+                            data-msg-id="<%= approvedList[i]._id %>">Delete
+                            entry</button>
+                        <button class="paidOut"
+                            data-msg-id="<%= approvedList[i]._id %>">Check
+                            written</button>
+                        <% } %>
+                </ul>
+            </section>
+
+            <section id="checkWritten">
+                <h2>Payment Issued</h2>
+                <p>These reimbursements have been paid out, go ahead and clear them.</p>
+                <ul class="">
+                    <!-- Loop through quotes objects from MongoDB -->
+                    <% for(let i=0; i < checkList.length; i++) {%>
+                        <li class="items">
+                            <span>
+                                Manager Approved!
+                            </span>
+                            <span>
+                                <%= checkList[i].date %>
+                            </span>
+                            <span>
+                                $ <%= checkList[i].amountSpent %>
+                            </span>
+                            <%= checkList[i].expenseDescription %></span>
+                        </li>
+                        <button class="deleteButton"
+                            data-msg-id="<%= checkList[i]._id %>">Clear</button>
+                        <% } %>
+                </ul>
+            </section>
+        </div>
+    </main>
+</div>
+
+    <script src="main.js"></script>
+
+</body>
+</html>
