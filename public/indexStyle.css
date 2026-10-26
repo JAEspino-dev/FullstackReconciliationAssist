@@ -1,8 +1,8 @@
 body {
-  background-image: url("img/images\ \(7\).jpeg");
-  background-size: cover;
+  background-image: url("img/PigAndMoney.jpeg");
   background-position: center;
   background-repeat: no-repeat;
+  background-size:cover;
   min-height: 100vh;
   word-wrap: break-word;
   display: flex;

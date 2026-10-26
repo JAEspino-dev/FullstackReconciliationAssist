@@ -16,35 +16,42 @@
 <div id="toFlex">
     <main>
         <section id="title">
-            <h1>Jobsite Expense Reimbursement Tracker</h1>
-            <p>Submit, review, approve, and track employee reimbursement requests from submission through payment.</p>
+            <h1>Bank Reconcoliation Checker</h1>
+            <p>Use this tool to clear transactions in your accounting software's bank reconciliation page!</p>
         </section>
 
         <section>
-            <h2>Record an Expense</h2>
-            <p>Employees: Enter the date, description, and amount of a work-related expense that requires reimbursement.</p>
-            <p>Managers: Review submitted requests and update their status as they move through the approval process.</p>
-            <% { %>
-                <form action="/recordExpense" method="POST">
+            <h2>How to use:</h2>
+            <p>Add bank statement, log in to your accounting software and navigate to bank reconciliation page, run tool.</p>
+            <p>After tool is ran, review the cleared transactions list!</p>
+            
+            <button>Run Tool</button>
+            <!-- <% { %>
+                <form action="/recordExpense" method="POST"> -->
                     <!-- <select name="approveStatus">
                         <option value="Approved">Approved by Manager</option>
                         <option value="Not Approved">Not Approved</option>
                     </select> -->
-                    <input type="date" name="date">
+                    <!-- <input type="date" name="date"> -->
                     <!-- <input type="text" placeholder="Employee Name" name="employeeName"> -->
-                    <input type="text" value="<%= user.local.email %>" placeholder="Description"
+                    <!-- <input type="text" value="<%= user.local.email %>" placeholder="Description"
                         name="expenseDescription">
                     <input type="number" step="0.01" placeholder="$ 0.00" name="amountSpent">
                     <button type="submit">Submit</button>
                 </form>
-                <% } %>
+                <% } %> -->
+
         </section>
 
         <div class="lists">
 
             <section id="unapprovedExpenses">
-                <h2>Pending Manager Review</h2>
-                <p>Submitted expenses waiting for approval.</p>
+                <h2>Bank Statement</h2>
+                <p>Drag and drop the bank statement here!</p>
+
+                <img src="img/bank_statement.png" alt="Calculator and Money Photo">
+                <button>Delete</button>
+
                 <ul class="">
                     <!-- Loop through quotes objects from MongoDB -->
                     <% for(let i=0; i < unapprovedList.length; i++) {%>
@@ -70,8 +77,11 @@
             </section>
 
             <section id="approvedExpenses">
-                <h2>Approved for Reimbursement</h2>
-                <p>These expenses have been approved and are waiting for a reimbursement check.</p>
+                <h2>Accounting Software Login</h2>
+                <p>Log in to your accounting software's bank reconciliation here!</p>
+                <img src="img/NonMatches.png" alt="Calculator and Money Photo">
+                <button>Delete</button>
+
                 <ul>
                     <% for(let i=0; i < approvedList.length; i++) {%>
                         <li>
@@ -101,8 +111,11 @@
             </section>
 
             <section id="checkWritten">
-                <h2>Payment Issued</h2>
-                <p>These reimbursements have been paid out, go ahead and clear them.</p>
+                <h2>Matched Transactions</h2>
+                <p>These transactions can now be cleared!</p>
+                <img src="img/AccountingSoftware.png" alt="Calculator and Money Photo">
+                <button>Delete</button>
+                
                 <ul class="">
                     <!-- Loop through quotes objects from MongoDB -->
                     <% for(let i=0; i < checkList.length; i++) {%>

@@ -9,7 +9,7 @@ module.exports = function (app, passport, db, ObjectID) {
 
   // PROFILE SECTION =========================
   app.get('/profile', isLoggedIn, function (req, res) {
-    db.collection('ExpensesList').find().toArray((err, result) => {
+    db.collection('BankRec').find().toArray((err, result) => {
       if (err) return console.log(err)
         const approvedList = result.filter(documents => documents.approveStatus === 'Approved' && documents.checkStatus === false)
         const unapprovedList = result.filter(objects => objects.approveStatus === 'Not Approved')
@@ -35,7 +35,7 @@ module.exports = function (app, passport, db, ObjectID) {
   // message board routes ===============================================================
 
   app.post('/recordExpense', (req, res) => {
-    db.collection('ExpensesList').save({
+    db.collection('BankRec').save({
       user: req.user.local.email,
       date: req.body.date,
       amountSpent: req.body.amountSpent,
@@ -51,7 +51,7 @@ module.exports = function (app, passport, db, ObjectID) {
   })
 
   app.put('/updateToApproved', (req, res) => {
-    db.collection('ExpensesList')
+    db.collection('BankRec')
       .findOneAndUpdate({
         _id: new ObjectID(req.body.collectionDocumentID) // this thing is a class, 
       }, {
@@ -69,7 +69,7 @@ module.exports = function (app, passport, db, ObjectID) {
   })
 
   app.put('/updateToCheckWritten', (req, res) => {
-    db.collection('ExpensesList')
+    db.collection('BankRec')
       .findOneAndUpdate({
         _id: new ObjectID(req.body.collectionDocumentID) // this thing is a class, 
       }, {
@@ -87,7 +87,7 @@ module.exports = function (app, passport, db, ObjectID) {
   })
 
   app.delete('/deleteItem', (req, res) => {
-    db.collection('ExpensesList').findOneAndDelete({ 
+    db.collection('BankRec').findOneAndDelete({ 
       _id: new ObjectID(req.body.collectionDocumentID) 
     }, (err, result) => {
       if (err) return res.send(500, err)
