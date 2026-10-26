@@ -20,10 +20,10 @@ Tool returns matched transactions, you can then clear!
 
 | Operation | What the User Can Do |
 |---|---|
-| **Create** | Create an account, save a session after analysis, and create a custom routine. |
-| **Read** | View session history, individual session results, progress, streaks, and routines. |
-| **Update** | Edit a session's name or notes, edit a routine, and update profile settings such as name and stance. |
-| **Delete** | Delete a session, delete a routine, or delete an account along with all associated data. |
+| **Create** | Create an account. |
+| **Read** | View session history, individual transactions matched, progress, streaks, and routines. |
+| **Update** | Upload Bank Statements, log in to accounting software. |
+| **Delete** | Delete statements, delete matched transaction. |
 
 ## Tech Stack
 
